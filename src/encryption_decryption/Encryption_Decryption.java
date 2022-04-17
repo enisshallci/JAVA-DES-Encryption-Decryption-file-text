@@ -93,3 +93,32 @@ public class Encryption_Decryption{
                    System.out.println("If you want to encrypt, please write encrypt");
                    ed = input.nextLine();
                }
+               
+                if (ed.toLowerCase().equals("encrypt")) {
+
+                   cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+                   byte[] text = text1.getBytes();
+                   System.out.println("Text in bytes: " + text);
+                   System.out.println("Text: " + new String(text));
+                   byte[] textEnc = cipher.doFinal(text);
+                   System.out.println("Text in bytes: " + textEnc);
+                   System.out.println("Text Encrypted: " + new String(textEnc));
+                   System.out.println("--------------------------------------------");
+
+                   System.out.println("Do you want to Decrypt it? ");
+                   ed = input.nextLine();
+                   if (ed.equals("yes")) {
+                       byte iv[] = cipher.getIV();
+                       IvParameterSpec dps = new IvParameterSpec(iv);
+                       cipher.init(Cipher.DECRYPT_MODE, secretKey, dps);
+                       byte[] textDec = cipher.doFinal(textEnc);
+                       System.out.println("Text Decrypted: " + new String(textDec));
+                   } else
+                       System.out.println("See you later, have fun!");
+               }
+           }catch (Exception e) {
+               System.out.println("An exception happened");
+           }
+       }
+    }
+}
